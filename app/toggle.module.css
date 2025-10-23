@@ -1,0 +1,429 @@
+/* Variables */
+:root {
+  --step: 0.5s;
+  --ease: linear(
+    0 0%,
+    0.2342 12.49%,
+    0.4374 24.99%,
+    0.6093 37.49%,
+    0.6835 43.74%,
+    0.7499 49.99%,
+    0.8086 56.25%,
+    0.8593 62.5%,
+    0.9023 68.75%,
+    0.9375 75%,
+    0.9648 81.25%,
+    0.9844 87.5%,
+    0.9961 93.75%,
+    1 100%
+  );
+  --offset: calc(var(--step) * 0.5);
+  --bg-light: hsl(235 5% 85%);
+  --bg-dark: hsl(220 27% 6%);
+  --button-light: hsl(223 4% 73%);
+  --button-dark: hsl(220 27% 6%);
+  --glow: hsl(182 90% 92%);
+}
+
+/* Button Base */
+.toggle {
+  background: transparent;
+  font-size: 64px;
+  height: 3em;
+  padding: 0;
+  border-radius: 3em;
+  border: 0;
+  aspect-ratio: 1.8 / 1;
+  position: relative;
+  cursor: pointer;
+}
+
+.toggle :is(.socket, .face) {
+  position: absolute;
+  border-radius: 3em;
+}
+
+/* Socket */
+.socket {
+  box-shadow: -0.05em 0.1em 0.2em -0.2em white;
+  background: hsl(0 0% 90%);
+  position: relative;
+  inset: 0;
+  transition-property: background-color, box-shadow;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+.dark .socket {
+  background: hsl(0 0% 0%);
+}
+
+.socketShadow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  border-radius: inherit;
+  box-shadow: 0em 0.075em 0.1em 0em white;
+  transition-property: opacity;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+/* Face */
+.face {
+  inset: 0.15em;
+  scale: 1;
+  transition-property: scale;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+.faceShadow,
+.faceShadow::after,
+.faceShadow::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.faceShadow::after,
+.faceShadow::before {
+  content: "";
+}
+
+.faceShadow::before {
+  background: black;
+  transition-property: opacity, translate, filter, scale;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+.faceShadow::after {
+  background: white;
+  scale: 0.5;
+  transition-property: opacity, translate, filter, scale;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+/* Face Plate */
+.facePlate {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: -0.05em 0.1em 0.2em -0.2em white inset;
+  background: conic-gradient(from 45deg, #0000, hsl(0 0% 100% / 0.05)), var(--button-light);
+  transition-property: background-color;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+.dark .facePlate {
+  background: conic-gradient(from 45deg, #0000, hsl(0 0% 100% / 0.05)), var(--button-dark);
+}
+
+/* Face Glowdrop */
+.faceGlowdrop {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  scale: 0;
+  transition-property: scale;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+.faceGlowdrop::after,
+.faceGlowdrop::before {
+  content: "";
+  height: 50%;
+  aspect-ratio: 1;
+  background: #fff;
+  filter: blur(6px);
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+}
+
+.faceGlowdrop::before {
+  left: 4%;
+  width: 56%;
+  translate: 0 -25%;
+}
+
+.faceGlowdrop::after {
+  bottom: 0;
+  right: 12%;
+  width: 34%;
+  translate: 0 20%;
+}
+
+/* Face Shine */
+.faceShine {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  border-radius: 3em;
+  transition-property: opacity;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+.faceShineShadow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  mask: conic-gradient(from 0deg, #fff 90deg, #0000 110deg 200deg, #fff 215deg 280deg, #0000 315deg);
+  box-shadow: 0.075em 0 0.025em -0.025em hsl(0 0% 0% / 0.5) inset, -0.075em -0.05em 0.025em -0.025em hsl(0 0% 0% / 0.5)
+    inset;
+}
+
+.faceShine::before {
+  content: "";
+  position: absolute;
+  inset: 0.05em;
+  border-radius: 3em;
+  box-shadow: 0 -0.05em 0.025em -0.025em hsl(0 0% 50% / 0.5) inset, -0.025em 0.05em 0.025em -0.025em
+    hsl(0 0% 100% / 0.5) inset;
+}
+
+.faceShine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(from 45deg, #0000, hsl(0 0% 100% / 0.25));
+  border-radius: 3em;
+}
+
+/* Face Glows */
+.faceGlows {
+  position: absolute;
+  inset: -0.075em;
+  opacity: 0;
+  border-radius: inherit;
+  mix-blend-mode: plus-lighter;
+  filter: blur(8px);
+  z-index: 20;
+  mask: conic-gradient(from 280deg, #0000, #fff 20deg 45deg, #0000 95deg),
+    conic-gradient(from 110deg, #0000, #fff 20deg, #0000 95deg);
+  transition-property: opacity;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+.faceGlows div {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  filter: blur(4px);
+  border: 0.1em solid white;
+}
+
+/* SVG Styles */
+.face svg {
+  width: 25%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -52% -48%;
+  overflow: visible !important;
+}
+
+.face svg path {
+  transform-box: fill-box;
+  transform-origin: center center;
+}
+
+/* Updated glow to use more sophisticated timing */
+.glow {
+  z-index: 3;
+  filter: drop-shadow(0 0 0.2em var(--glow));
+  will-change: opacity;
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: 1.25s;
+  transition-delay: var(--offset);
+  transition-timing-function: linear(
+    0 0%,
+    0.0039 6.25%,
+    0.0156 12.5%,
+    0.0352 18.75%,
+    0.0625 25%,
+    0.0977 31.25%,
+    0.1407 37.5%,
+    0.1914 43.74%,
+    0.2499 49.99%,
+    0.3164 56.25%,
+    0.3906 62.5%,
+    0.5625 75%,
+    0.7656 87.5%,
+    1 100%
+  );
+}
+
+.glowPath {
+  fill: var(--glow);
+  stroke: var(--glow);
+  opacity: 1;
+  stroke-width: 0px;
+}
+
+/* Updated trail with better animation timing */
+.trailHolder {
+  z-index: 2;
+  /* Removed blur filter completely for sharp laser effect */
+}
+
+.trailHolder .trail {
+  /* Changed stroke-width from 6 to 2 to match the main outline path exactly */
+  stroke-width: 2;
+}
+
+.trail {
+  stroke-dasharray: 10 80;
+  stroke-dashoffset: 10;
+  opacity: 0;
+  transition-property: stroke-dashoffset, opacity;
+  transition-duration: calc(var(--step) * 3), calc(var(--step) * 0.5);
+  transition-delay: var(--offset), calc(var(--offset) + (var(--step) * 2.5));
+  transition-timing-function: var(--ease),
+    linear(
+      0 0%,
+      0.0039 6.25%,
+      0.0156 12.5%,
+      0.0352 18.75%,
+      0.0625 25%,
+      0.0977 31.25%,
+      0.1407 37.5%,
+      0.1914 43.74%,
+      0.2499 49.99%,
+      0.3164 56.25%,
+      0.3906 62.5%,
+      0.5625 75%,
+      0.7656 87.5%,
+      1 100%
+    );
+}
+
+/* Main SVG */
+.main {
+  z-index: 1;
+}
+
+.outline {
+  transition-property: stroke;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+.innerFace {
+  fill: hsl(230 5% 80%);
+}
+
+.innerBg {
+  fill: black;
+  transition-property: fill;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+/* Radial Glow Background */
+.toggle::before {
+  content: "";
+  width: 150vmax;
+  height: 200vmax;
+  aspect-ratio: 1;
+  border-radius: 0%;
+  background: radial-gradient(hsl(0 0% 100% / 0.25), hsl(0 0% 0% / 1) 35%);
+  position: absolute;
+  translate: -50% -65%;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  opacity: 0.35;
+  pointer-events: none;
+  transition-property: scale, opacity;
+  transition-duration: var(--step);
+  transition-timing-function: var(--ease);
+}
+
+/* Active State */
+.toggle:active .socket {
+  box-shadow: -0.045em 0.1em 0.2em -0.15em white;
+}
+
+.toggle:active .face {
+  scale: 0.99;
+}
+
+/* Pressed State (Dark Mode) */
+.toggle[aria-pressed="true"] .face {
+  scale: 1.12;
+}
+
+.toggle[aria-pressed="true"] .outline {
+  stroke: hsl(0 0% 30%);
+}
+
+.toggle[aria-pressed="true"] .innerBg {
+  fill: hsl(0 0% 20%);
+}
+
+.toggle[aria-pressed="true"] .socket {
+  box-shadow: -0.025em 0.08em 0.2em -0.1em white;
+}
+
+/* Updated glow transition for pressed state */
+.toggle[aria-pressed="true"] .glow {
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: var(--step);
+  transition-delay: 0s;
+  transition-timing-function: var(--ease);
+}
+
+.toggle[aria-pressed="true"] .faceGlowdrop {
+  scale: 1;
+}
+
+.toggle[aria-pressed="true"]::before {
+  scale: 2;
+  opacity: 0;
+}
+
+.toggle[aria-pressed="true"] .faceShadow::before {
+  translate: -15% 55%;
+  filter: blur(1em);
+  opacity: 0.35;
+}
+
+.toggle[aria-pressed="true"] .faceShadow::after {
+  filter: blur(0.5em);
+  scale: 1;
+}
+
+.toggle[aria-pressed="true"] .socketShadow,
+.toggle[aria-pressed="true"] .faceGlows,
+.toggle[aria-pressed="true"] .faceShine {
+  opacity: 1;
+}
+
+/* Updated trail animation for pressed state */
+.toggle[aria-pressed="true"] .trail {
+  transition: stroke-dashoffset 0s;
+  opacity: 1;
+  stroke-dashoffset: -70;
+}
+
+/* Responsive sizing */
+@media (max-width: 768px) {
+  .toggle {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .toggle {
+    font-size: 32px;
+  }
+}
